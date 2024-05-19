@@ -1,6 +1,6 @@
 const express = require("express");
 //const path = require("path");
-//const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const cors = require("./middlewares/cors");
 
 const PORT = 3000;
@@ -8,7 +8,7 @@ const app = express();
 
 app.use(
   cors,
-  //bodyParser.json(),
+  bodyParser.json()
   //express.static(path.join(__dirname, "public")),
 );
 
