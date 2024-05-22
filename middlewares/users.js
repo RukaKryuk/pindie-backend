@@ -29,4 +29,14 @@ const findUserById = async (req, res, next) => {
   }
 };
 
-module.exports = { findAllUsers, createUser, findUserById };
+const updateUser = async (req, res, next) => {
+  try {
+    req.game = await users.findByIdAndUpdate(req.params.id, req.body);
+    next();
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Ошибка обновления пользователя" }));
+  }
+};
+
+module.exports = { findAllUsers, createUser, findUserById, updateUser };
