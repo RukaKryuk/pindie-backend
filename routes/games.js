@@ -4,6 +4,7 @@ const { checkAuth } = require("../middlewares/auth.js");
 
 const {
   findAllGames,
+  checkIsVoteRequest,
   createGame,
   findGameById,
   updateGame,
@@ -37,7 +38,7 @@ gamesRouter.get("/games/:id", findGameById, sendGameById);
 gamesRouter.put(
   "/games/:id",
   findGameById,
-  //checkIsVoteRequest,
+  checkIsVoteRequest,
   checkIfUsersAreSafe,
   checkIfCategoriesAvaliable,
   checkEmptyFields,

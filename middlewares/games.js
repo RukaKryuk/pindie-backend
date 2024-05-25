@@ -1,7 +1,6 @@
 const games = require("../models/game");
 
 const findAllGames = async (req, res, next) => {
-  // Поиск всех игр в проекте по заданной категории
   if (req.query["categories.name"]) {
     req.gamesArray = await games.findGameByCategory(
       req.query["categories.name"]
@@ -66,6 +65,11 @@ const deleteGame = async (req, res, next) => {
 };
 
 const checkEmptyFields = async (req, res, next) => {
+  //не понял
+  if (req.isVoteRequest) {
+    next();
+    return;
+  }
   if (
     !req.body.title ||
     !req.body.description ||
@@ -83,6 +87,10 @@ const checkEmptyFields = async (req, res, next) => {
 };
 
 const checkIfCategoriesAvaliable = async (req, res, next) => {
+  if (req.isVoteRequest) {
+    next();
+    return;
+  }
   if (!req.body.categories || req.body.categories.length === 0) {
     res.setHeader("Content-Type", "application/json");
     res
@@ -132,6 +140,14 @@ const checkIsGameExists = async (req, res, next) => {
   }
 };
 
+const checkIsVoteRequest = async (req, res, next) => {
+  // Если в запросе присылают только поле users
+  if (Object.keys(req.body).length === 1 && req.body.users) {
+    req.isVoteRequest = true;
+  }
+  next();
+};
+
 module.exports = {
   findAllGames,
   createGame,
@@ -141,6 +157,6 @@ module.exports = {
   checkEmptyFields,
   checkIfCategoriesAvaliable,
   checkIfUsersAreSafe,
-  //h
   checkIsGameExists,
+  checkIsVoteRequest,
 };
