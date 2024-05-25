@@ -19,6 +19,7 @@ const {
 } = require("../controllers/users");
 
 usersRouter.get("/users", findAllUsers, sendAllUsers);
+usersRouter.get("/users/:id", findUserById, sendUserById);
 usersRouter.post(
   "/users",
   findAllUsers,
@@ -27,7 +28,6 @@ usersRouter.post(
   createUser,
   sendUserCreated
 );
-usersRouter.get("/users/:id", findUserById, sendUserById);
 
 usersRouter.put(
   "/users/:id",
